@@ -20,7 +20,7 @@ public abstract class SearchEngine {
 	protected IndexReader reader;
 	protected IndexSearcher searcher;
 	protected String path;
-	
+
 	protected IndexWriter getIndexWriter() throws IOException {
 		if (writer == null) {
 			Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
@@ -33,22 +33,24 @@ public abstract class SearchEngine {
 
 		return writer;
 	}
-	
+
 	public void closeIndexWriter() throws IOException {
-		if(writer != null) {
+		if (writer != null) {
 			writer.close();
 		}
 	}
-	
+
 	protected IndexSearcher getIndexSearcher() throws IOException {
-		if(searcher == null) {
+		if (searcher == null) {
 			reader = DirectoryReader.open(FSDirectory.open(new File(path)));
 			searcher = new IndexSearcher(reader);
 		}
 		return searcher;
 	}
-	
+
 	public void closeIndexReader() throws IOException {
-		reader.close();
+		if (reader != null) {
+			reader.close();
+		}
 	}
 }

@@ -32,16 +32,21 @@ public class DegreeQueryHandler extends Thread{
 				System.out.println("DegreeQueryHandler: Waiting for query string...");
 				queryString = bufferedReader.readLine();
 				SimpleEntry<String, String> entry = degreeSearchEngine.query(queryString);
-				printWriter.println(entry!=null?entry.getKey():"");
-				printWriter.println(entry!=null?entry.getValue():"");
+				
+				String returnString = entry!=null?entry.getKey() + "," + entry.getValue():""+","+"";
+				System.out.println("Return string: " + returnString);
+				printWriter.println(returnString);
+				printWriter.flush();
+				System.out.println();
 			} catch (IOException e) {
-				e.printStackTrace();
+				// e.printStackTrace();
 				break;
 			} catch (ParseException e) {
-				e.printStackTrace();
+				// e.printStackTrace();
 				break;
 			} catch (InvalidTokenOffsetsException e) {
-				e.printStackTrace();
+				// e.printStackTrace();
+				break;
 			}
 		}
 		
@@ -49,6 +54,7 @@ public class DegreeQueryHandler extends Thread{
 			this.bufferedReader.close();
 			this.printWriter.close();
 			this.socket.close();
+			this.degreeSearchEngine.closeIndexReader();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

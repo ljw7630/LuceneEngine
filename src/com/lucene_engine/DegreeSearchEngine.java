@@ -54,29 +54,55 @@ public class DegreeSearchEngine extends SearchEngine {
 		Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
 		QueryParser parser = new QueryParser(Version.LUCENE_43, "contents",
 				analyzer);
-		
+
 		queryString = QueryParser.escape(queryString);
-		
-		Query query = parser.parse(queryString + "~0.7");
+
+		/* Fuzzy search over a long string first */
+
+		Query query = parser.parse(queryString.replace(" ", "_") + "~0.7");
 
 		System.out.println(query);
 
 		TopDocs results = indexSearcher.search(query, 1);
 		ScoreDoc[] hits = results.scoreDocs;
-		
-		for(ScoreDoc hit: hits) {
-			
-			Document doc = searcher.doc(hit.doc);
-			System.out.println(doc.get("contents"));
-			System.out.println(hit.score + "\n" + doc);
-		}
+
+		// for(ScoreDoc hit: hits) {
+		//
+		// Document doc = searcher.doc(hit.doc);
+		// System.out.println(doc.get("contents"));
+		// System.out.println(hit.score + "\n" + doc);
+		// }
 
 		if (hits.length > 0) {
 			Document doc = searcher.doc(hits[0].doc);
+			System.out.println(doc.get("keyword") + " " + doc.get("level")
+					+ "\n");
 			return new SimpleEntry<String, String>(doc.get("keyword"),
 					doc.get("level"));
 		} else {
-			return null;
+			/*
+			 * Cannot find any document? Split the string into space-seperated
+			 * query string and try again
+			 */
+			System.out
+					.println("cannot find any match documents! try another approach...");
+
+			query = parser.parse(queryString);
+			System.out.println(query);
+
+			results = indexSearcher.search(query, 1);
+			hits = results.scoreDocs;
+
+			if (hits.length > 0) {
+				Document doc = searcher.doc(hits[0].doc);
+				System.out.println(doc.get("keyword") + " " + doc.get("level")
+						+ "\n");
+				return new SimpleEntry<String, String>(doc.get("keyword"),
+						doc.get("level"));
+			} else {
+				System.out.println("Still no luck. return null...");
+				return null;
+			}
 		}
 	}
 }

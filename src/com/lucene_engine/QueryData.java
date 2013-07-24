@@ -2,12 +2,15 @@ package com.lucene_engine;
 
 
 
+
 public class QueryData {
 	private static DegreeSearchEngine degreeSearchEngine;
 	
 
-//	public static void main(String[] args) throws Exception {
-//		
+	public static void main(String[] args) throws Exception {
+		initDegreeSearchEngine();
+		degreeSearchEngine.closeIndexReader();
+		degreeSearchEngine.closeIndexWriter();
 //		BufferedReader in = null;
 //		in = new BufferedReader(new InputStreamReader(System.in, "UTF-8"));
 //		while(true) {
@@ -25,11 +28,11 @@ public class QueryData {
 //				System.out.println("not found");
 //			}
 //		}
-//	}
+	}
 	
 
 	
-	public void initDegreeSearchEngine() {
+	public static void initDegreeSearchEngine() {
 		degreeSearchEngine = new DegreeSearchEngine(Statics.DEGREE_INDEX_BASE_PATH);
 	}
 }
