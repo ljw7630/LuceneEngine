@@ -8,7 +8,6 @@ import java.net.Socket;
 import java.util.AbstractMap.SimpleEntry;
 
 import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 
 public class DegreeQueryHandler extends Thread{
 	
@@ -42,9 +41,6 @@ public class DegreeQueryHandler extends Thread{
 				// e.printStackTrace();
 				break;
 			} catch (ParseException e) {
-				// e.printStackTrace();
-				break;
-			} catch (InvalidTokenOffsetsException e) {
 				// e.printStackTrace();
 				break;
 			}

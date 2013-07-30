@@ -25,20 +25,38 @@ public class Handler {
 				String commandString = bufferedReader.readLine();
 
 				System.out.println("Command: " + commandString);
+				String engine = bufferedReader.readLine();
 				if (commandString.equals("index")) {
-					String engine = bufferedReader.readLine();
+					
 					if (engine.equals("DegreeSearchEngine")) {
 						IndexData.initDegreeSearchEngine();
 					} else if (engine.equals("CourseSearchEngine")) {
 
 					} else if (engine.equals("PositionSearchEngine")) {
 
+					} else if (engine.equals("LanguageSearchEngine")) {
+						
+					} else if(engine.equals("UniversitySearchEngine")) {
+						IndexData.initUniversitySearchEngine();
 					}
 
 				} else if (commandString.equals("query")) {
-					DegreeQueryHandler degreeQueryHandler = new DegreeQueryHandler(
-							client);
-					degreeQueryHandler.start();
+					if (engine.equals("DegreeSearchEngine")) {
+						DegreeQueryHandler degreeQueryHandler = new DegreeQueryHandler(
+								client);
+						degreeQueryHandler.start();
+					} else if (engine.equals("CourseSearchEngine")) {
+
+					} else if (engine.equals("PositionSearchEngine")) {
+
+					} else if (engine.equals("LanguageSearchEngine")) {
+						LanguageQueryHandler languageQueryHandler = new LanguageQueryHandler(client);
+						languageQueryHandler.start();
+					} else if(engine.equals("UniversitySearchEngine")) {
+						UniversityQueryHandler universityQueryHandler = new UniversityQueryHandler(client);
+						universityQueryHandler.start();
+					}
+
 				} else {
 					System.out.println("Unknown command");
 					client.close();
