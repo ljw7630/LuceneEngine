@@ -8,52 +8,53 @@ import java.net.Socket;
 
 import org.apache.lucene.queryparser.classic.ParseException;
 
-public class LanguageQueryHandler extends Thread{
-	private LanguageSearchEngine languageQueryEngine;
+public class UniversityLocationQueryHandler extends Thread {
+	private UniversityLocationSearchEngine universityLocationSearchEngine;
 	private Socket socket;
 	private BufferedReader bufferedReader;
 	private PrintWriter printWriter;
 
-	public LanguageQueryHandler(Socket socket) throws IOException {
-		System.out.println("Create LanguageQueryHandler...");
+	public UniversityLocationQueryHandler(Socket socket) throws IOException {
+		System.out.println("Create UniversityLocationQueryHandler...");
 		this.socket = socket;
-		this.languageQueryEngine = new LanguageSearchEngine(
-				Statics.LANGUAGE_INDEX_BASE_PATH);
+		this.universityLocationSearchEngine = new UniversityLocationSearchEngine(
+				Statics.LOCATION_INDEX_PATH_PATH);
 		this.bufferedReader = new BufferedReader(new InputStreamReader(
 				this.socket.getInputStream()));
-		this.printWriter = new PrintWriter(this.socket.getOutputStream(), true);
+		this.printWriter = new PrintWriter(this.socket.getOutputStream());
 	}
 
 	public void run() {
 		while (true) {
 			String queryString;
-
 			try {
 				System.out
-						.println("LanguageQueryHnalder: Waiting for query string...");
+						.println("UniversityLocationQueryHandler: Waiting for query string...");
 				queryString = bufferedReader.readLine();
-				String result = languageQueryEngine.query(queryString);
+				String result = universityLocationSearchEngine
+						.query(queryString);
+
+				if (result == null) {
+					result = "None";
+				}
 
 				System.out.println("Return string: " + result);
 				printWriter.println(result);
 				printWriter.flush();
 				System.out.println();
 			} catch (IOException e) {
-				e.printStackTrace();
 				break;
 			} catch (ParseException e) {
-				e.printStackTrace();
 				break;
 			}
 		}
 		
-		try {
+		try{
 			this.bufferedReader.close();
 			this.printWriter.close();
 			this.socket.close();
-			this.languageQueryEngine.closeIndexReader();
-			this.languageQueryEngine.closeIndexWriter();
-		} catch (IOException e) {
+			this.universityLocationSearchEngine.closeIndexReader();
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}

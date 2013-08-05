@@ -25,19 +25,23 @@ public class Handler {
 				String commandString = bufferedReader.readLine();
 
 				System.out.println("Command: " + commandString);
+				
 				String engine = bufferedReader.readLine();
+				
 				if (commandString.equals("index")) {
-					
+
 					if (engine.equals("DegreeSearchEngine")) {
 						IndexData.initDegreeSearchEngine();
 					} else if (engine.equals("CourseSearchEngine")) {
-
+						IndexData.initCourseSearchEngine();
 					} else if (engine.equals("PositionSearchEngine")) {
 
 					} else if (engine.equals("LanguageSearchEngine")) {
-						
-					} else if(engine.equals("UniversitySearchEngine")) {
+
+					} else if (engine.equals("UniversitySearchEngine")) {
 						IndexData.initUniversitySearchEngine();
+					} else if (engine.equals("UniversityLocationSearchEngine")) {
+						IndexData.initUniversityLocationSearchEngine();
 					}
 
 				} else if (commandString.equals("query")) {
@@ -46,15 +50,23 @@ public class Handler {
 								client);
 						degreeQueryHandler.start();
 					} else if (engine.equals("CourseSearchEngine")) {
-
+						CourseQueryHandler courseQueryHandler = new CourseQueryHandler(
+								client);
+						courseQueryHandler.start();
 					} else if (engine.equals("PositionSearchEngine")) {
 
 					} else if (engine.equals("LanguageSearchEngine")) {
-						LanguageQueryHandler languageQueryHandler = new LanguageQueryHandler(client);
+						LanguageQueryHandler languageQueryHandler = new LanguageQueryHandler(
+								client);
 						languageQueryHandler.start();
-					} else if(engine.equals("UniversitySearchEngine")) {
-						UniversityQueryHandler universityQueryHandler = new UniversityQueryHandler(client);
+					} else if (engine.equals("UniversitySearchEngine")) {
+						UniversityQueryHandler universityQueryHandler = new UniversityQueryHandler(
+								client);
 						universityQueryHandler.start();
+					} else if (engine.equals("UniversityLocationSearchEngine")) {
+						UniversityLocationQueryHandler universityLocationQueryHandler = new UniversityLocationQueryHandler(
+								client);
+						universityLocationQueryHandler.start();
 					}
 
 				} else {

@@ -47,6 +47,7 @@ public class DegreeSearchEngine extends SearchEngine {
 
 	public SimpleEntry<String, String> query(String queryString)
 			throws IOException, ParseException {
+		System.out.println("DegreeSearchEngine: " + queryString);
 
 		IndexSearcher indexSearcher = getIndexSearcher();
 

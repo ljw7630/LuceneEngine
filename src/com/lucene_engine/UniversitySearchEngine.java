@@ -26,6 +26,7 @@ public class UniversitySearchEngine extends SearchEngine {
 		doc.add(new StringField("keyword", name, Field.Store.YES));
 		doc.add(new StringField("contents", name.replace(' ', '_'),
 				Field.Store.YES));
+//		doc.add(new StringField("contents", name, Field.Store.YES));
 
 		try {
 			IndexWriter indexWriter = getIndexWriter();
@@ -37,6 +38,8 @@ public class UniversitySearchEngine extends SearchEngine {
 	}
 
 	public String query(String queryString) throws Exception {
+		System.out.println("UniversitySearchEngine " + queryString);
+		
 		IndexSearcher indexSearcher = getIndexSearcher();
 
 		Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_43);
