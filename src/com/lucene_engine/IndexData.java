@@ -21,10 +21,12 @@ public class IndexData {
 	private static UniversityLocationSearchEngine universityLocationSearchEngine;
 
 	public static void main(String[] args) throws Exception {
-		// initCourseSearchEngine();
-		// initUniversitySearchEngine();
-		// initUniversityLocationSearchEngine();
+		initCourseSearchEngine();
+		initDegreeSearchEngine();
 		initLanguageSearchEngine();
+		initUniversitySearchEngine();
+		initUniversityLocationSearchEngine();
+
 	}
 
 	public static void initCourseSearchEngine() throws Exception {
