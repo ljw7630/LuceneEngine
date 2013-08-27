@@ -9,8 +9,8 @@ import java.net.Socket;
 public class Handler {
 	private static ServerSocket serverSocket;
 
-	public Handler() throws IOException {
-		serverSocket = new ServerSocket(Statics.SERVER_PORT);
+	public Handler(int port) throws IOException {
+		serverSocket = new ServerSocket(port);
 	}
 
 	public void start() throws Exception {
@@ -81,7 +81,15 @@ public class Handler {
 	}
 
 	public static void main(String args[]) throws Exception {
-		Handler handler = new Handler();
+		int port;
+		if(args.length != 1) {
+			System.out.println("using " + Statics.SERVER_PORT + " as port");
+			port = Statics.SERVER_PORT;
+		} else {
+			port = Integer.parseInt(args[0]);
+			System.out.println("using " + port + " as port");
+		}
+		Handler handler = new Handler(port);
 		handler.start();
 	}
 }

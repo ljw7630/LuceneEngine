@@ -30,7 +30,7 @@ public class LanguageQueryHandler extends Thread{
 
 			try {
 				System.out
-						.println("LanguageQueryHnalder: Waiting for query string...");
+						.println("LanguageQueryHandler: Waiting for query string...");
 				queryString = bufferedReader.readLine();
 				String result = languageQueryEngine.query(queryString);
 
